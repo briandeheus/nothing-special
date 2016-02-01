@@ -21,6 +21,7 @@ app.use(sessions.middleware);
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+app.disable('x-powered-by');
 
 function getInRange(req, res) {
 
@@ -106,6 +107,19 @@ app.get('/read/:id', (req, res) => {
     const template = new Page('post');
 
     Post.getOne(req.params.id, (error, postModel) => {
+        
+        if (postModel.id === null) {
+
+            const template = new Page('error');
+            template.addVariable('errorCode', 404);
+            template.addVariable('errorMessage', 'The page you are looking for could not be found.');
+
+            res.status(404);
+            res.send(template.render());
+
+            return;
+
+        }
 
         template.addVariable('isAdmin', req.isLoggedIn);
         template.addVariable('post', postModel);
@@ -121,8 +135,12 @@ app.post('/read/:id', (req, res) => {
 
     if (req.isLoggedIn === false) {
 
+        const template = new Page('error');
+        template.addVariable('errorCode', 400);
+        template.addVariable('errorMessage', 'You should not be where you are right now.');
+
         res.status(400);
-        res.send('400');
+        res.send(template.render());
         return;
 
     }
@@ -194,8 +212,12 @@ app.all('/create', (req, res) => {
 
     if (req.isLoggedIn === false) {
 
+        const template = new Page('error');
+        template.addVariable('errorCode', 400);
+        template.addVariable('errorMessage', 'You should not be where you are right now.');
+
         res.status(400);
-        res.send('400');
+        res.send(template.render());
         return;
 
     }
@@ -229,8 +251,12 @@ app.all('/drafts', (req, res) => {
 
     if (req.isLoggedIn === false) {
 
+        const template = new Page('error');
+        template.addVariable('errorCode', 400);
+        template.addVariable('errorMessage', 'You should not be where you are right now.');
+
         res.status(400);
-        res.send('400');
+        res.send(template.render());
         return;
 
     }
@@ -249,8 +275,12 @@ app.get('/auth/:key', (req, res) => {
 
     if (req.params.key !== settings.blog.authKey) {
 
+        const template = new Page('error');
+        template.addVariable('errorCode', 400);
+        template.addVariable('errorMessage', 'You should not be where you are right now.');
+
         res.status(400);
-        res.send('invalid key');
+        res.send(template.render());
         return;
 
     }
@@ -271,5 +301,16 @@ app.get('/auth/:key', (req, res) => {
 app.listen(settings.server, function () {
 
     console.log('The app is live.')
+
+});
+
+app.get('*', (req, res) => {
+
+    const template = new Page('error');
+    template.addVariable('errorCode', 404);
+    template.addVariable('errorMessage', 'The page you are looking for could not be found.');
+
+    res.status(404);
+    res.send(template.render());
 
 });
