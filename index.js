@@ -36,6 +36,16 @@ function getInRange(req, res) {
     const from = page * POSTS_PER_PAGE;
     const to   = from + POSTS_PER_PAGE;
 
+    if (isNaN(from)) {
+        res.redirect('/404');
+        return;
+    }
+
+    if (isNaN(to)) {
+        res.redirect('/404');
+        return;
+    }
+
     async.series([
 
         /* Get the total post count */
@@ -107,7 +117,7 @@ app.get('/read/:id', (req, res) => {
     const template = new Page('post');
 
     Post.getOne(req.params.id, (error, postModel) => {
-        
+
         if (postModel.id === null) {
 
             const template = new Page('error');
