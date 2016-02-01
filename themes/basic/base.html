@@ -1,0 +1,125 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{{ pageTitle }}</title>
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/9.1.0/styles/monokai-sublime.min.css">
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans', sans-serif;
+            font-size: 14px;
+            background-color: #E1F5FE;
+        }
+
+        h1 {
+            font-size: 1.2em;
+            color: #01579B;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .view-width {
+            width: 600px;
+        }
+
+        .header {
+            padding: 0 32px;
+            margin: 32px auto;
+            box-sizing: border-box;
+        }
+
+        .post {
+            width: 600px;
+            margin: 32px auto;
+            padding: 32px;
+            box-sizing: border-box;
+            background-color: white;
+        }
+
+        .post:first-child {
+            margin-top: 0;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 4px 16px;
+            min-width: 100px;
+            border-radius: 4px;
+            background-color: #039BE5;
+            color: white;
+            text-align: center;
+        }
+
+        footer {
+            padding: 0 32px;
+            margin: 0 auto 32px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .render-time {
+            margin-top: 32px;
+            font-size: 8px;
+        }
+
+        {% if isAdmin %}
+
+        textarea,
+        input[type="text"] {
+            width: 100%;
+            font-size: 14px;
+            padding: 16px;
+            box-sizing: border-box;
+            border-radius: 4px;
+            border: 1px solid #039BE5;
+            margin-bottom: 16px;
+            outline: none;
+            font-family: 'Noto Sans', sans-serif;
+        }
+
+        input {
+            margin-bottom: 16px;
+        }
+
+        textarea {
+            height: 400px;
+        }
+
+        .button.red {
+            background-color: #DD2C00;
+        }
+
+        .admin-list {
+            text-align: center;
+            margin: 32px;
+        }
+
+        {% endif %}
+
+    </style>
+</head>
+<body>
+<div class="view-width header">
+    <a href="/">
+        <h1>Brian's Blog.</h1>
+    </a>
+</div>
+<div class="content">
+{% block content %}
+
+{% endblock %}
+</div>
+{% if isAdmin %}
+<div class="admin-list">
+    <a href="/drafts">View drafts</a>
+</div>
+{% endif %}
+</body>
+</html>

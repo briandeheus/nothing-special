@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="post view-width">
+    {% if isAdmin %}
+    <form method="post">
+        <input name="title" type="text" value="{{ post.title }}" placeholder="title">
+        <textarea name="content" placeholder="post">{{ post.content }}</textarea>
+
+        {% if post != undefined %}
+            <input type="checkbox" {% if post.draft == true %} checked {% endif %} name="draft"> this post is a draft<br>
+            <button name="save" class="button">save</button>
+            <button name="delete" class="button red">delete</button>
+        {% else %}
+            <input type="checkbox" checked name="draft"> this post is a draft<br>
+            <button name="save" class="button">create</button>
+        {% endif %}
+    </form>
+    {% else %}
+
+    <h1>{{ post.title}}</h1>
+    <p>
+        <small>{{ post.creationDate|date('F jS, Y') }}</small>
+    </p>
+    <p>
+        {{ post.markedDown }}
+    </p>
+    {% endif %}
+</div>
+
+{% endblock %}

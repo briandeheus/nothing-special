@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+{% for post in posts %}
+<div class="post view-width">
+    <a href="/read/{{ post.id }}"><h1>{{ post.title}}</h1></a>
+    <p>
+        <small>{{ post.creationDate|date('F jS, Y') }}</small>
+    </p>
+    <p>
+        {{ post.markedDown }}
+    </p>
+</div>
+{% endfor %}
+
+<footer class="view-width">
+    <div>
+{% if previous > 0 %}
+    <a href="/archive/{{previous}}"><div class="button">Newer</div></a>
+{% endif %}
+{% if previous == 0 %}
+    <a href="/"><div class="button">Newer</div></a>
+{% endif %}
+{% if next >= 1 %}
+    <a href="/archive/{{next}}"><div class="button">Older</div></a>
+{% endif %}
+    </div>
+    <div class="render-time">From request to rendered in {{ renderTime }}ms</div>
+</footer>
+{% endblock %}

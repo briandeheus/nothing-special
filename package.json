@@ -1,0 +1,15 @@
+{
+  "name": "mobs",
+  "version": "0.0.1",
+  "description": "Markdown Only Blogging System",
+  "main": "index.js",
+  "author": "Brian de Heus <me@brian.jp>",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^1.5.2",
+    "body-parser": "^1.14.2",
+    "dynasty": "^0.2.4",
+    "express": "^4.13.4",
+    "swig": "^1.4.2"
+  }
+}
